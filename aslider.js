@@ -4,15 +4,26 @@ var aslider = {
         // Get each slider element and apply our styles to it
         var sliders = $('.aslider');
         $(sliders).each(function() {
-            $(this).css({'position': 'absolute'});
-            $(this).parents().css({'position': 'relative'});
-            var slides = $(this).children('.aslide');
+            $(this).css({'position': 'relative'});
+            var slides = $(this).find('.aslide');
+            console.log("LEN:", slides.length);
             $(slides).each(function() {
-                
+                $(this).attr('style', aslider.slideFade+";"+aslider.slideFadeOut);
             });
-        
-        });
-        
+            $(slides[0]).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
+            setTimeout(function() {aslider.advanceSlide(slides[0]);}, parseInt($(slides[0]).attr('data-duration')) * 1000);
+        });        
+    },
+    
+    advanceSlide: function(currentSlide) {
+        var nextSlide = $(currentSlide).next('.aslide');
+        if (nextSlide.length == 0) { // Loop to the first slide if we are on the last slide now
+            nextSlide = $(currentSlide).parent().children('.aslide:first-child');
+        }
+
+        $(currentSlide).attr('style', aslider.slideFade+";"+aslider.slideFadeOut);
+        $(nextSlide).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
+        setTimeout(function() {aslider.advanceSlide(nextSlide);}, parseInt($(nextSlide).attr('data-duration')) * 1000);
     },
 
     
@@ -26,7 +37,7 @@ var aslider = {
     }, 
     
     /* Configuration */
-    slideFade: "opacity: 1;, transition: opacity .25s ease-in-out; -moz-transition: opacity .25s ease-in-out; -webkit-transition: opacity .25s ease-in-out;",
+    slideFade: "opacity: 1; top: 0; position: absolute; width: inherit; left: 0; overflow: hidden; transition: opacity 1s ease-in-out; -moz-transition: opacity 1s ease-in-out; -webkit-transition: opacity 1s ease-in-out;",
     slideFadeOut: "opacity: 0",
     slideFadeIn: "opacity: 1",
     slideSlide: "",
