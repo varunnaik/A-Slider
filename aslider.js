@@ -9,9 +9,15 @@ var aslider = {
             console.log("LEN:", slides.length);
             $(slides).each(function() {
                 $(this).attr('style', aslider.slideFade+";"+aslider.slideFadeOut);
+                if ($(this).attr('data-audio')) {
+                    var loop = $(this).attr('data-audio-loop');
+                    console.log('loop', loop)
+                    $(this).append('<audio src="'+$(this).attr('data-audio')+'" '+((typeof loop!== 'undefined')? 'loop':'')+' preload></audio>');
+                }
             });
             $(slides[0]).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
             setTimeout(function() {aslider.advanceSlide(slides[0]);}, parseInt($(slides[0]).attr('data-duration')) * 1000);
+            $(slides[0]).find('audio')[0].play();
         });        
     },
     
@@ -23,6 +29,11 @@ var aslider = {
 
         $(currentSlide).attr('style', aslider.slideFade+";"+aslider.slideFadeOut);
         $(nextSlide).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
+        
+        // Cancel playing audio
+        $(currentSlide).find('audio')[0].pause();
+        // Play new audio
+        $(nextSlide).find('audio')[0].play();
         setTimeout(function() {aslider.advanceSlide(nextSlide);}, parseInt($(nextSlide).attr('data-duration')) * 1000);
     },
 
