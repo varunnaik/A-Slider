@@ -16,13 +16,14 @@ var aslider = {
             $(this).append('<a href="javascript:void(0)" style="'+aslider.playPauseIconStyle+'" class="play-pause-toggle" data-state="play"><img src="'+aslider.pauseIcon+'" style="width: inherit; height: inherit;" /></a>');
             
             var slides = $(this).find('.aslide');
-            console.log("LEN:", slides.length);
+
             $(slides).each(function() {
-                $(this).attr('style', aslider.slideFade+";"+aslider.slideFadeOut);
-                if ($(this).attr('data-audio')) {
-                    var loop = $(this).attr('data-audio-loop');
-                    console.log('loop', loop)
-                    $(this).append('<audio src="'+$(this).attr('data-audio')+'" '+((typeof loop!== 'undefined')? 'loop':'')+' preload></audio>');
+                var slide = $(this);
+
+                slide.attr('style', aslider.slideFade+";"+aslider.slideFadeOut);
+                if (slide.attr('data-audio')) {
+                    var loop = slide.attr('data-audio-loop');
+                    slide.append('<audio src="'+slide.attr('data-audio')+'" '+((typeof loop!== 'undefined')? 'loop':'')+' preload></audio>');
                 }
             });
             $(slides[0]).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
