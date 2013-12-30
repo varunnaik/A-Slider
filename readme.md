@@ -16,6 +16,8 @@ A simple, responsive slider with no external dependencies except Jquery.
 The slider does not require you to use and Javascript to initialise, and it is 
 not possible to control it using Javascript.
 
+Simply include the provided JavaScript file and you're good to go.
+
 Usage
 =====
 
@@ -43,3 +45,5 @@ An audio clip to play when this slide is shown. Optional.
 **data-audio-loop**
 If defined, the audio will loop.
 
+Notes:
+In your stylesheet, set display: none for each slide if you do not want them to be displayed between page load and the slider initialising.

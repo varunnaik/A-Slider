@@ -101,7 +101,7 @@ var aslider = {
     }, 
     
     /* Configuration */
-    slideFade: "opacity: 1; top: 0; position: absolute; width: inherit; left: 0; overflow: hidden; transition: opacity 1s ease-in-out; -moz-transition: opacity 1s ease-in-out; -webkit-transition: opacity 1s ease-in-out;",
+    slideFade: "display: block; opacity: 1; top: 0; position: absolute; width: inherit; left: 0; overflow: hidden; transition: opacity 1s ease-in-out; -moz-transition: opacity 1s ease-in-out; -webkit-transition: opacity 1s ease-in-out;",
     slideFadeOut: "opacity: 0",
     slideFadeIn: "opacity: 1",
     slideSlide: "",
