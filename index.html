@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A-Slider: Responsive CSS based content slider</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="aslider.js"></script>
+    <style>
+        /* Page markup */
+        body {
+            padding: 0; margin: 0;
+        }
+        header {
+            margin: 0;
+            background: black;
+            padding: 30px 0 30px 0;
+        }
+        header h1, header h2 {
+            color: white;
+            text-align: center;
+            font-family: roboto, arial, sans-serif;
+        }
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 40px;
+            font-weight: normal;
+        }
+        section {
+            background: #f5f5f5;
+            margin: 0;
+        }
+        section h2 {
+            font-family: roboto, arial, sans-serif;
+            font-size: 32px;
+            text-align: center;
+            margin-top: 0;
+            padding-top: 25px;
+        }
+        .box {
+            border: 1px solid #ccc;
+            box-shadow: 0 0 3px #eee;
+            background: white;
+            border-radius: 2px;
+            width: 400px;
+            margin: 0 auto;
+            font-family: roboto, arial, sans-serif;
+            line-height: 1.5;
+            padding: 25px;
+        }
+        .box ul li {
+            margin-bottom: 15px;
+        }
+        /* End Page markup */
+
+        /* Slider-specific styles */
+        .aslide {
+            display: none;
+        }
+        .aslide img {
+            max-width: 100%;
+        }
+        #slider {
+            width: 90%;
+            height: 600px;
+            margin: 0 auto;
+            margin-bottom: 35px;
+        }
+        .aslide .text {
+            color: #f8f8f8;
+            text-shadow: 0 0 2px #000;
+            font-weight: bold;
+            font-size: 36px;
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            bottom: 30px;
+            font-family: sans-serif;
+        }
+        @media screen and (max-width: 700px) {
+            .aslide .text {
+                font-size: 24px !important;
+            }
+        }
+        @media screen and (max-width: 500px) {
+            .aslide .text {
+                font-size: 16px !important;
+            }
+        }
+        /* End slider-specific styles */
+    </style>
+</head>
+<body>
+<header>
+    <div class="">
+        <h1>A-Slider</h1>
+        <h2>Responsive slider with audio support.</h2>
+    </div>
+</header>
+<section class="">
+    <h2>A-Slider: Easy-to-use, highly configurable Slider</h2>
+    <div id="slider" class="aslider" data-duration="10">
+        <div class="aslide" data-duration="4" data-audio="assets/audio/Acoustic-Josh-10248_hifi.mp3" data-audio-loop>
+            <img src="assets/images/88f06952-b838-4d64-a1dc-0658beb70f13.jpg" />
+            <div class="text">Slide any content, not just images.</div>
+        </div>
+        <div class="aslide" data-duration="5" data-audio="assets/audio/Country_-Adrien_G-8614_hifi.mp3">
+            <img src="assets/images/390b43aa-5103-4f36-ab20-3b218edaf702.jpg" />
+            <div class="text">Specify optional audio for each slide.</div>
+        </div>
+        <div class="aslide" data-duration="6" data-audio="assets/audio/Driving_-SpoonZ-9705_hifi.mp3">
+            <img src="assets/images/bb5d5b69-3c0d-4cb3-8048-c8a7a2a5214d.jpg" />
+            <div class="text">Set slide duration individually for each slide.</div>
+        </div>
+        <div class="aslide" data-duration="7" data-audio="assets/audio/I_Wouldn-duh-8326_hifi.mp3">
+            <img src="assets/images/crab_nebula.png" />
+            <div class="text">All configuration in HTML, no Javascript initialisation necessary.</div>
+        </div>
+    </div>
+    <h2>Slider Features</h2>
+    <div class="box">
+    <ul>
+        <li>No dependencies except jQuery; works well with Twitter Bootstrap if required</li>
+        <li>Specify optional audio for each slide</li>
+        <li>Specify slide duration individually for each slide</li>
+        <li>Supports multiple sliders on the same page</li>
+        <li>Uses CSS 3 transitions for better performance</li>
+        <li>Slide any content, not just images</li>
+        <li>All configuration done using HTML attributes - no javascript configuration needed</li>
+    </ul>
+    </div>
+    <a href="https://github.com/varunnaik/A-Slider"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+</section>
+</body>
+</html>
