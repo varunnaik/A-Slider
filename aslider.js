@@ -37,6 +37,7 @@ var aslider = {
             $(slides[0]).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
             aslider.timeoutHandle = setTimeout(function() {aslider.advanceSlide(slides[0]);}, parseInt(duration) * 1000);
             aslider.currentSlide = slides[0];
+            $(this).height($(slides[0]).height());
             $(slides[0]).find('audio')[0].play();
         });
 
@@ -57,6 +58,8 @@ var aslider = {
         $(currentSlide).find('audio')[0].pause();
         // Play new audio
         $(nextSlide).find('audio')[0].play();
+
+        $(nextSlide).parents('.aslider').height($(nextslide).height())
 
         var duration = $(slides[0]).attr('data-duration') || $(this).attr('data-duration');
         if (!duration) throw ("Could not find duration on slide or on slider.");
