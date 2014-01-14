@@ -8,16 +8,22 @@ var aslider = {
         var sliders = $('.aslider');
         $(sliders).each(function() {
             $(this).css({'position': 'relative'});
-
+            console.log(typeof $(this).attr('data-hide-mute'))
             // If we should show the play and mute controls, do so now
-            if (! $(this).attr('data-hide-mute') && ! $(this).attr('data-hide-controls')) {
+            if (typeof $(this).attr('data-hide-mute') === 'undefined' &&
+                typeof $(this).attr('data-hide-controls') === 'undefined') {
                 // Add audio/mute icon
-                $(this).append('<a href="javascript:void(0)" style="'+aslider.muteIconStyle+'" class="audio-toggle" data-state="100"><img src="'+aslider.audioLoudIcon+'" style="width: inherit; height: inherit;" /></a>');
+                $(this).append('<a href="javascript:void(0)" style="'+aslider.muteIconStyle+
+                    '" class="audio-toggle" data-state="100"><img src="'+aslider.audioLoudIcon+
+                    '" style="width: inherit; height: inherit;" /></a>');
             }
 
-            if (! $(this).attr('data-hide-pause') && ! $(this).attr('data-hide-controls')) {
+            if (typeof $(this).attr('data-hide-pause') === 'undefined' &&
+                typeof $(this).attr('data-hide-controls') === 'undefined') {
                 // Add play-pause icon
-                $(this).append('<a href="javascript:void(0)" style="'+aslider.playPauseIconStyle+'" class="play-pause-toggle" data-state="play"><img src="'+aslider.pauseIcon+'" style="width: inherit; height: inherit;" /></a>');
+                $(this).append('<a href="javascript:void(0)" style="'+aslider.playPauseIconStyle+
+                    '" class="play-pause-toggle" data-state="play"><img src="'+aslider.pauseIcon+
+                    '" style="width: inherit; height: inherit;" /></a>');
             }
 
             var slides = $(this).find('.aslide');
