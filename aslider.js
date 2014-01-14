@@ -59,9 +59,9 @@ var aslider = {
         // Play new audio
         $(nextSlide).find('audio')[0].play();
 
-        $(nextSlide).parents('.aslider').height($(nextslide).height())
+        $(nextSlide).parents('.aslider').height($(nextSlide).height())
 
-        var duration = $(slides[0]).attr('data-duration') || $(this).attr('data-duration');
+        var duration = $(nextSlide).attr('data-duration') || $(nextSlide).parents('.aslider').attr('data-duration');
         if (!duration) throw ("Could not find duration on slide or on slider.");
         
         aslider.timeoutHandle = setTimeout(function() {aslider.advanceSlide(nextSlide);}, parseInt(duration) * 1000);
