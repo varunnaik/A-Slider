@@ -105,13 +105,24 @@ var aslider = {
             $(aslider.currentSlide).find('audio')[0].play();
         }    
     },
+
+    onResize: function() {
+        // Change the height of the slider elements
+        var sliders = $('.aslider');
+        $(sliders).each(function() {
+            var h = $(this).find('.aslide').height();
+            $(this).height(h);
+        });
+    },
     
 
     init: function() {
         if (window.addEventListener) { // Mozilla, Netscape, Firefox
             window.addEventListener('load', this.initAsliders, false);
+            window.addEventListener('resize', this.onResize, false);
         } else if (window.attachEvent) { // IE
             window.attachEvent('onload', this.initAsliders);
+            window.attachEvent('resize', this.onResize);
         }
     }, 
     
