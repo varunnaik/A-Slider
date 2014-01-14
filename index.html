@@ -54,6 +54,14 @@
         .box ul li {
             margin-bottom: 15px;
         }
+        .credits {
+            color: #888888;
+            font-size: 14px;
+            text-align: center;
+        }
+        .credits a {
+            color: black;
+        }
         /* End Page markup */
 
         /* Slider-specific styles */
@@ -66,8 +74,7 @@
         #slider {
             width: 90%;
             margin: 0 auto;
-            margin-bottom: 35px;
-            height: 600px;
+            margin-bottom: 15px;
         }
         .aslide .text {
             color: #f8f8f8;
@@ -80,36 +87,9 @@
             bottom: 30px;
             font-family: sans-serif;            
         }
-        @media screen and (max-width: 1024px) {
-            
-            #slider {
-                height: 540px;
-            }
-        }
-        @media screen and (max-width: 900px) {
-            
-            #slider {
-                height: 440px;
-            }
-        }
-        @media screen and (max-width: 1024px) {
-            
-            #slider {
-                height: 540px;
-            }
-        }
-        @media screen and (max-width: 900px) {
-            
-            #slider {
-                height: 440px;
-            }
-        }
         @media screen and (max-width: 700px) {
             .aslide .text {
                 font-size: 24px !important;
-            }
-            #slider {
-                height: 340px;
             }
         }
         @media screen and (max-width: 500px) {
@@ -124,9 +104,6 @@
             }
             .aslide .text {
                 font-size: 16px !important;
-            }
-            #slider {
-                height: 160px;
             }
             .box {
                 width: auto;
@@ -165,7 +142,7 @@
             <div class="text">All configuration in HTML, no Javascript necessary.</div>
         </div>
     </div>
-    <p>All images courtesy <a href="http://www.davemorrowphotography.com/">Dave Morrow Photography</a>.</p>
+    <p class="credits container">All images courtesy <a href="http://www.davemorrowphotography.com/">Dave Morrow Photography</a>.</p>
     <h2>Slider Features</h2>
     <div class="box">
     <ul>
