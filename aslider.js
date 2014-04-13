@@ -4,11 +4,11 @@ var aslider = {
     currentSlide: null,
 
     initAsliders: function() {
+
         // Get each slider element and apply our styles to it
         var sliders = $('.aslider');
         $(sliders).each(function() {
             $(this).css({'position': 'relative'});
-            console.log(typeof $(this).attr('data-hide-mute'))
             // If we should show the play and mute controls, do so now
             if (typeof $(this).attr('data-hide-mute') === 'undefined' &&
                 typeof $(this).attr('data-hide-controls') === 'undefined') {
@@ -61,9 +61,16 @@ var aslider = {
         $(nextSlide).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
         
         // Cancel playing audio
-        $(currentSlide).find('audio')[0].pause();
+        var currentAudio = $(currentSlide).find('audio');
+
+        if (currentAudio.length > 0) {
+            currentAudio[0].pause();
+        }
         // Play new audio
-        $(nextSlide).find('audio')[0].play();
+        var nextAudio = $(nextSlide).find('audio');
+        if (nextAudio.length > 0) {
+            nextAudio[0].play();
+        }
 
         $(nextSlide).parents('.aslider').height($(nextSlide).height())
 
@@ -145,6 +152,6 @@ var aslider = {
     pauseIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAABQCAYAAABPlrgBAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHjSURBVHja7NxdcoIwEMDxhSD04xD2TpyTO9VDVAsSKIvi6AMVNmCnzn9fnCEJH79kAy9u1LatELcRQwAKKNZI5g7Yfe5G2w5HKZrGSxw7ed1IPtZv+7GVpa5biyuq6ijSbY1ptukeyOeh10xCVRWiA+jj9OuGpuLc/iuQNb4rX7ykThEkSYcF7/vrdm3SteV/kj6H0l9AxkLbtd/CJj3IWJzbCp2wh6L0IJmb1Ff7LQgz+Tw6IZpeD0EpfTQZ5AbGOHOX/cO3s8cnp5RaHyVztg++e6l29wFdZN73nvKVvC8b8ypz0qy7UmpJwlLAOD5NIvM1000sT7lS+KIFBRRQQAEFFFAIUEABBRRQQAEFFFBAAQUUUEAhQAEFFFBAAQUUUEABBRRQQAEFAlBAAQUUUEABBRRQQAEFFFAIUEABBRRQQPk/KInUQWU/rOOr2l47qjo266+U2ttu0DpO4y2LzZPh5RH/YHfGSg4urAKEFouxxNyiNrE1Bb7KeTeo/UNTz1g9J199TxniPXOTYbSf9l9oH8zXBAl+++iD1t38lyMbmR7X9gVBLg+rtZ7GYl82ZpBTJgSGpkRyLsVxXQZEj2f98XqV1+b1PjGUGBoqd3WbctC5I8ok8vEGCiigrBs/AgwAO8iO8aKxXSIAAAAASUVORK5CYII=",
     muteIconStyle: "display: block; height: 25px; width: 25px; position: absolute; left: 30px; top: 30px;",
     playPauseIconStyle: "display: block; height: 25px; width: 25px; position: absolute; left: 75px; top: 30px;",
-}
+};
 
 aslider.init();
