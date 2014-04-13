@@ -37,14 +37,23 @@ var aslider = {
                     slide.append('<audio src="'+slide.attr('data-audio')+'" '+((typeof loop!== 'undefined')? 'loop':'')+' preload></audio>');
                 }
             });
-            var duration = $(slides[0]).attr('data-duration') || $(this).attr('data-duration');
-            if (!duration) throw ("Could not find duration on slide or on slider.");
+            if (slides.length > 0) { // Don't crap out if no slides specified
+                var duration = $(slides[0]).attr('data-duration') || $(this).attr('data-duration');
+                if (!duration) throw ("Could not find duration on slide or on slider.");
 
-            $(slides[0]).attr('style', aslider.slideFade+";"+aslider.slideFadeIn);
-            aslider.timeoutHandle = setTimeout(function() {aslider.advanceSlide(slides[0]);}, parseInt(duration) * 1000);
-            aslider.currentSlide = slides[0];
-            $(this).height($(slides[0]).height());
-            $(slides[0]).find('audio')[0].play();
+                $(slides[0]).attr('style', aslider.slideFade + ";" + aslider.slideFadeIn);
+                aslider.timeoutHandle = setTimeout(function () {
+                    aslider.advanceSlide(slides[0]);
+                }, parseInt(duration) * 1000);
+                aslider.currentSlide = slides[0];
+                $(this).height($(slides[0]).height());
+
+                var audio = $(slides[0]).find('audio');
+                if (audio.length > 0) {
+                    audio[0].play();
+                }
+
+            }
         });
 
         $('.audio-toggle').click(aslider.toggleAudio);
@@ -72,7 +81,7 @@ var aslider = {
             nextAudio[0].play();
         }
 
-        $(nextSlide).parents('.aslider').height($(nextSlide).height())
+        $(nextSlide).parents('.aslider').height($(nextSlide).height());
 
         var duration = $(nextSlide).attr('data-duration') || $(nextSlide).parents('.aslider').attr('data-duration');
         if (!duration) throw ("Could not find duration on slide or on slider.");
