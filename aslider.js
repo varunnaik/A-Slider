@@ -8,21 +8,23 @@ var aslider = {
         // Get each slider element and apply our styles to it
         var sliders = $('.aslider');
         $(sliders).each(function() {
+
             $(this).css({'position': 'relative'});
+
             // If we should show the play and mute controls, do so now
             if (typeof $(this).attr('data-hide-mute') === 'undefined' &&
                 typeof $(this).attr('data-hide-controls') === 'undefined') {
                 // Add audio/mute icon
-                $(this).append('<a href="javascript:void(0)" style="'+aslider.muteIconStyle+
-                    '" class="audio-toggle" data-state="100"><img src="'+aslider.audioLoudIcon+
+                $(this).append('<a style="' + aslider.muteIconStyle +
+                    '" class="audio-toggle" data-state="100"><img src="' + aslider.audioLoudIcon +
                     '" style="width: inherit; height: inherit;" /></a>');
             }
 
             if (typeof $(this).attr('data-hide-pause') === 'undefined' &&
                 typeof $(this).attr('data-hide-controls') === 'undefined') {
                 // Add play-pause icon
-                $(this).append('<a href="javascript:void(0)" style="'+aslider.playPauseIconStyle+
-                    '" class="play-pause-toggle" data-state="play"><img src="'+aslider.pauseIcon+
+                $(this).append('<a style="' + aslider.playPauseIconStyle +
+                    '" class="play-pause-toggle" data-state="play"><img src="' + aslider.pauseIcon +
                     '" style="width: inherit; height: inherit;" /></a>');
             }
 
@@ -146,7 +148,17 @@ var aslider = {
             window.attachEvent('onload', this.initAsliders);
             window.attachEvent('resize', this.onResize);
         }
-    }, 
+    },
+
+    // TODO: Make multiple sliders work
+    // TODO: On init, de-register previous event listeners
+    // TODO: Test adding sliders dynamically
+    // TODO: Improve positioning
+    // TODO: Test on various browsers (Monday)
+    // TODO: Create Bower packages
+    // TODO: Addnext/prev buttons
+    // TODO: REmove jQuery
+    // TODO: Update
     
     /* Configuration */
     slideFade: "display: block; opacity: 1; top: 0; position: absolute; left: 0; overflow: hidden; transition: opacity 1s ease-in-out; -moz-transition: opacity 1s ease-in-out; -webkit-transition: opacity 1s ease-in-out;",
