@@ -24,7 +24,7 @@ var aslider = {
                 typeof $(this).attr('data-hide-controls') === 'undefined') {
                 // Add audio/mute icon
                 $(this).append('<a style="' + aslider.muteIconStyle +
-                '" class="audio-toggle" data-state="100" ' +
+                '" class="' + aslider.muteButtonClass + '" data-state="100" ' +
                 'onclick="aslider.toggleAudio(' + sliderIndex + ')"><img src="' + aslider.audioLoudIcon +
                 '" style="width: inherit; height: inherit;" /></a>');
                 // Having the onclick handler appended this way neatly resolves potential memory leaks if the page
@@ -35,7 +35,7 @@ var aslider = {
                 typeof $(this).attr('data-hide-controls') === 'undefined') {
                 // Add play-pause icon
                 $(this).append('<a style="' + aslider.playPauseIconStyle +
-                '" class="play-pause-toggle" data-state="play" ' +
+                '" class="' + aslider.pauseButtonClass + '" data-state="play" ' +
                 'onclick="aslider.toggleState(' + sliderIndex + ')"><img src="' + aslider.pauseIcon +
                 '" style="width: inherit; height: inherit;" /></a>');
             }
@@ -116,7 +116,7 @@ var aslider = {
         'use strict';
 
         var slider = aslider.sliders[sliderIndex].sliderContainer;
-        var muteButton = $(slider.find('.audio-toggle')[0]);
+        var muteButton = $(slider.find('.'+aslider.muteButtonClass)[0]);
 
         if (aslider.sliders[sliderIndex].muted) {
 
@@ -139,8 +139,8 @@ var aslider = {
         'use strict';
 
         var slider = aslider.sliders[sliderIndex].sliderContainer;
-        var pauseButton = $(slider.find('.play-pause-toggle')[0]);
-        
+        var pauseButton = $(slider.find('.'+aslider.pauseButtonClass)[0]);
+
         if (pauseButton.attr('data-state') == 'play') {
             pauseButton.find('img').attr('src', aslider.playIcon);
             pauseButton.attr('data-state', 'pause');
@@ -191,10 +191,7 @@ var aslider = {
             window.attachEvent('resize', this.onResize);
         }
     },
-
-    // TODO: Test multiple sliders work
-    // TODO: Test play and pause buttons work
-    // TODO: Move play, pause buttons to properties
+    
     // TODO: Test adding sliders dynamically with AngularJs
     // TODO: Write documentation for Angular
 
@@ -220,7 +217,9 @@ var aslider = {
     playIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAABQCAYAAABPlrgBAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAF1SURBVHja7NxbbsJADIVhsLzDrHPWVJZSCajUQmguc/Pl91MklAz6dMZv9vX2dSuXRy0X6l7y67nA8Y7yA1NAWa/UOLLxewGF1OxGSYcjJ94JjyMV7xZQEqVGGn0nFI40/l4IHOn03QJKsNTIgDPc4cjAswoojlMjk841jSOTzzeJI0b+RwHFeGrE4JWejmMRZTqOZZRp/cYDyvDUeEEZiuMNZciV8orSNTWeUbrhREBpjhMJpVm/iYhSnZqoKFU40VFO4WRBOdRvsqHsSk1GlE2czCgfcUBZ6TeKxTsMSVkpkvK3FpKyAkJSXjBA+WcWQQCh0e6aVFEw8qGcmmESQHIkpXrCTcGIidJ89lEAiZOUrpOxCobv6zNsblrB8IUybaJewbDfU0zsW1Aw7KGY3MShYNjoKeb3tCgYc1DcbfBRMMb1FNf7nRSMfiihNn8JIG2TEnYvnIJRh5JmY6AAcjwpKfdJKhjbKGwafekpgDzrW4ABAMB/PbhARrnXAAAAAElFTkSuQmCC",
     pauseIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAABQCAYAAABPlrgBAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHjSURBVHja7NxdcoIwEMDxhSD04xD2TpyTO9VDVAsSKIvi6AMVNmCnzn9fnCEJH79kAy9u1LatELcRQwAKKNZI5g7Yfe5G2w5HKZrGSxw7ed1IPtZv+7GVpa5biyuq6ijSbY1ptukeyOeh10xCVRWiA+jj9OuGpuLc/iuQNb4rX7ykThEkSYcF7/vrdm3SteV/kj6H0l9AxkLbtd/CJj3IWJzbCp2wh6L0IJmb1Ff7LQgz+Tw6IZpeD0EpfTQZ5AbGOHOX/cO3s8cnp5RaHyVztg++e6l29wFdZN73nvKVvC8b8ypz0qy7UmpJwlLAOD5NIvM1000sT7lS+KIFBRRQQAEFFFAIUEABBRRQQAEFFFBAAQUUUEAhQAEFFFBAAQUUUEABBRRQQAEFAlBAAQUUUEABBRRQQAEFFFAIUEABBRRQQPk/KInUQWU/rOOr2l47qjo266+U2ttu0DpO4y2LzZPh5RH/YHfGSg4urAKEFouxxNyiNrE1Bb7KeTeo/UNTz1g9J199TxniPXOTYbSf9l9oH8zXBAl+++iD1t38lyMbmR7X9gVBLg+rtZ7GYl82ZpBTJgSGpkRyLsVxXQZEj2f98XqV1+b1PjGUGBoqd3WbctC5I8ok8vEGCiigrBs/AgwAO8iO8aKxXSIAAAAASUVORK5CYII=",
     muteIconStyle: "display: block; height: 25px; width: 25px; position: absolute; left: 30px; top: 30px;",
-    playPauseIconStyle: "display: block; height: 25px; width: 25px; position: absolute; left: 75px; top: 30px;"
+    playPauseIconStyle: "display: block; height: 25px; width: 25px; position: absolute; left: 75px; top: 30px;",
+    muteButtonClass: 'audio-toggle',
+    pauseButtonClass: 'play-pause-toggle'
 };
 
 aslider.init();
