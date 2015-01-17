@@ -70,6 +70,7 @@ var aslider = {
 
     advanceSlide: function (currentSlide, sliderIndex) {
         'use strict';
+
         var nextSlide = $(currentSlide).next('.aslide');
         var slider = aslider.sliders[sliderIndex].sliderContainer;
 
@@ -100,35 +101,36 @@ var aslider = {
 
     _playAudio: function(slideIndex) {
         // Given a slideshow, plays the audio for the current slide if present and not muted
-        "use strict";
+        'use strict';
         if (aslider.sliders[slideIndex].muted === false) {
-            $(aslider.sliders[slideIndex].currentSlide).find('audio')[0].play();
+            aslider.sliders[slideIndex].currentSlide.querySelector('audio').play();
         }
     },
 
     _pauseAudio: function(slideIndex) {
         // Given a slideshow, pauses the audio for the current slide
-        "use strict";
-        $(aslider.sliders[slideIndex].currentSlide).find('audio')[0].pause();
+        'use strict';
+        aslider.sliders[slideIndex].currentSlide.querySelector('audio').pause();
     },
 
     toggleAudio: function (sliderIndex) {
+        // Turn on/off audio for a given slider
         'use strict';
 
         var slider = aslider.sliders[sliderIndex].sliderContainer;
-        var muteButton = $(slider.find('.'+aslider.muteButtonClass)[0]);
+        var muteButton = slider.querySelector('.'+aslider.muteButtonClass);
 
         if (aslider.sliders[sliderIndex].muted) {
 
-            muteButton.find('img').attr('src', aslider.audioLoudIcon);
-            muteButton.attr('data-state', '100');
+            muteButton.querySelector('img').setAttribute('src', aslider.audioLoudIcon);
+            muteButton.setAttribute('data-state', '100');
             aslider.sliders[sliderIndex].muted = false;
             aslider._playAudio(sliderIndex);
 
         } else {
 
-            muteButton.find('img').attr('src', aslider.audioMuteIcon);
-            muteButton.attr('data-state', '0');
+            muteButton.querySelector('img').setAttribute('src', aslider.audioMuteIcon);
+            muteButton.setAttribute('data-state', '0');
             aslider.sliders[sliderIndex].muted = true;
             aslider._pauseAudio(sliderIndex);
 
