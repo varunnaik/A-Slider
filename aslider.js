@@ -13,7 +13,7 @@ var aslider = {
             var sliderObject = {};
             var sliderIndex = aslider.sliders.push(sliderObject) - 1;
 
-            sliderObject.sliderContainer = $(this);
+            sliderObject.sliderContainer = $(this)[0];
             sliderObject.muted = false;
 
             // Normalise each slider
@@ -136,38 +136,43 @@ var aslider = {
     },
 
     toggleState: function (sliderIndex) {
+        // Toggles the Paused/playing state of a slider
         'use strict';
 
         var slider = aslider.sliders[sliderIndex].sliderContainer;
-        var pauseButton = $(slider.find('.'+aslider.pauseButtonClass)[0]);
+        console.log(slider)
+        var pauseButton = slider.querySelector('.'+aslider.pauseButtonClass);
 
-        if (pauseButton.attr('data-state') == 'play') {
-            pauseButton.find('img').attr('src', aslider.playIcon);
-            pauseButton.attr('data-state', 'pause');
-            // cancelTimeout
-            clearTimeout(aslider.sliders[sliderIndex].timeoutHandle);
+        if (pauseButton.getAttribute('data-state') === 'play') { // If the slider is playing, pause it
 
-            // pause audio
-            aslider._pauseAudio(sliderIndex);
-        } else {
-            pauseButton.find('img').attr('src', aslider.pauseIcon);
-            pauseButton.attr('data-state', 'play');
-            // settimeout
+            pauseButton.querySelector('img').setAttribute('src', aslider.playIcon);// Change button icon from pause to play
+            pauseButton.setAttribute('data-state', 'pause');
+            clearTimeout(aslider.sliders[sliderIndex].timeoutHandle); // Stop advancing to next slide
+            aslider._pauseAudio(sliderIndex);// pause audio
+
+        } else { // If on the other hand the slider is paused, start playing
+
+            pauseButton.querySelector('img').setAttribute('src', aslider.pauseIcon); // Change pause button icon to pause icon
+            pauseButton.setAttribute('data-state', 'play');
+            // Start advancing slides
             aslider.sliders[sliderIndex].timeoutHandle = setTimeout(function () {
                 aslider.advanceSlide(aslider.sliders[sliderIndex].currentSlide, sliderIndex);
-            }, parseInt($(aslider.sliders[sliderIndex].currentSlide).attr('data-duration')) * 1000);
+            }, parseInt(aslider.sliders[sliderIndex].currentSlide.getAttribute('data-duration')) * 1000);
+            aslider._playAudio(sliderIndex);// unpause audio
 
-            // unpause audio
-            aslider._playAudio(sliderIndex);
         }
     },
 
     onResize: function () {
         // Change the height of the slider elements
         var sliders = $('.aslider');
+        //for (var i = 0; i < sliders.length; i++) {
+        //    sliders[i].clientHeight = sliders[i].querySelector('.aslide').clientHeight;
+        //}
         $(sliders).each(function () {
             var h = $(this).find('.aslide').height();
-            $(this).height(h);
+            console.log("JQ SET HEIGHT", h)
+            //$(this).height(h);
         });
     },
 
@@ -191,7 +196,7 @@ var aslider = {
             window.attachEvent('resize', this.onResize);
         }
     },
-    
+
     // TODO: Test adding sliders dynamically with AngularJs
     // TODO: Write documentation for Angular
 
@@ -201,9 +206,21 @@ var aslider = {
     // TODO: Update documentation with bower instructions and js file download
 
     // TODO: Addnext/prev buttons
-    // TODO: REmove jQuery
+    // TODO: Remove jQuery
     // TODO: Test on various browsers (Monday)
     // TODO: Update
+
+    /*
+     Take a HTML page
+     Add AngularJs
+     Do ng-repeat to create a new slider
+     Use aslider.init() and ensure everything works
+     Copy-paste code above to add another slider
+     Repeat
+     Now remove a slider
+     Does everything still work well?
+     Add support for refreshing and restarting sliders
+     */
 
     /* Configuration */
     slideFade: "display: block; opacity: 1; top: 0; position: absolute; left: 0; overflow: hidden; transition: opacity 1s ease-in-out; -moz-transition: opacity 1s ease-in-out; -webkit-transition: opacity 1s ease-in-out;",
