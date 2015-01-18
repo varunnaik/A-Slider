@@ -33,13 +33,26 @@ eg.
     </div>
 </div>
 ```
-Supported configuration options:    
 
-```data-duration="<time>"```    
+#####Configuration options (for the entire slider, applied to the element with class aslider):
+
+``` data-hide-controls ```: 
+If present, hides the controls - both the mute and the pause buttons.
+
+``` data-hide-mute ```: 
+If present, hides the mute button.
+
+``` data-hide-pause ```: 
+If present, hides the pause button.
+
+#####Configuration options (for each slide):    
+
+``` data-duration="<time>" ```:    
 Duration the slide should be shown, in seconds. Required.
 
-```data-audio="<path to audio>"```    
+``` data-audio="<path to audio>" ```:   
 An audio clip to play when this slide is shown. Optional.
 
-```data-audio-loop```    
+``` data-audio-loop ```: 
 If present, this tag causes audio for the slide to loop. Optional.
+
