@@ -1,0 +1,25 @@
+{
+  "name": "a-slider",
+  "version": "0.9.0",
+  "homepage": "http://varunnaik.github.io/A-Slider/",
+  "authors": [
+    "Varun Naik <varun.naik@gmail.com>"
+  ],
+  "description": "Responsive slider with audio support and simple configuration",
+  "main": "aslider.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "slider",
+    "DOM",
+    "audio",
+    "responsive",
+    "HTML",
+    "Javascript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*"
+  ]
+}

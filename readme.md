@@ -14,6 +14,9 @@ A simple, responsive slider with no external dependencies except Jquery.
 
 Note that there is no way to control the slider using JavaScript once initialised.
 
+Installation
+============
+bower install aslider
 
 Usage
 =====
