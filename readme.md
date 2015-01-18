@@ -16,7 +16,7 @@ Note that there is no way to control the slider using JavaScript once initialise
 
 Installation
 ============
-bower install aslider
+bower install a-slider or download aslider.js from this repository and add it manually
 
 Usage
 =====
