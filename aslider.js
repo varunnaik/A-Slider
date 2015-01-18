@@ -203,31 +203,6 @@ var aslider = {
         }
     },
 
-    // TODO: Test adding sliders dynamically with AngularJs
-    // TODO: Write documentation for Angular
-
-    // TODO: Improve positioning
-
-    // TODO: Create Bower packages
-    // TODO: Update documentation with bower instructions and js file download
-
-    // TODO: Addnext/prev buttons
-    // TODO: Remove jQuery
-    // TODO: Test on various browsers (Monday)
-    // TODO: Update
-
-    /*
-     Take a HTML page
-     Add AngularJs
-     Do ng-repeat to create a new slider
-     Use aslider.init() and ensure everything works
-     Copy-paste code above to add another slider
-     Repeat
-     Now remove a slider
-     Does everything still work well?
-     Add support for refreshing and restarting sliders
-     */
-
     /* Configuration */
     slideFade: "display: block; opacity: 1; top: 0; position: absolute; left: 0; overflow: hidden; transition: opacity 1s ease-in-out; -moz-transition: opacity 1s ease-in-out; -webkit-transition: opacity 1s ease-in-out;",
     slideFadeOut: "opacity: 0",
