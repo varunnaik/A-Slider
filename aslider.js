@@ -6,80 +6,99 @@ var aslider = {
         'use strict';
 
         // Get each slider element and process it
-        var sliders = $('.aslider');
-        $(sliders).each(function () {
+        var sliders = document.querySelectorAll('.aslider');
+        for (var i = 0; i < sliders.length; i++) {
+
+            var currentSlider = sliders[i];
 
             // Create an object to represent slider state
             var sliderObject = {};
             var sliderIndex = aslider.sliders.push(sliderObject) - 1;
 
-            sliderObject.sliderContainer = $(this)[0];
+            sliderObject.sliderContainer = sliders[i];
             sliderObject.muted = false;
 
             // Normalise each slider
-            $(this).css({'position': 'relative'});
+            var style = currentSlider.getAttribute('style');
+            currentSlider.setAttribute('style', (style)?style+';position:relative':'position:relative');
 
             // If we should show the play and mute controls, do so now
-            if (typeof $(this).attr('data-hide-mute') === 'undefined' &&
-                typeof $(this).attr('data-hide-controls') === 'undefined') {
+            if (! currentSlider.hasAttribute('data-hide-mute') &&
+                    ! currentSlider.hasAttribute('data-hide-controls')) {
                 // Add audio/mute icon
-                $(this).append('<a style="' + aslider.muteIconStyle +
-                '" class="' + aslider.muteButtonClass + '" data-state="100" ' +
-                'onclick="aslider.toggleAudio(' + sliderIndex + ')"><img src="' + aslider.audioLoudIcon +
-                '" style="width: inherit; height: inherit;" /></a>');
+                var muteButton = document.createElement('a');
+                muteButton.setAttribute('class', aslider.muteButtonClass);
+                muteButton.setAttribute('style', aslider.muteIconStyle);
+                muteButton.setAttribute('data-state', 100);
+                muteButton.setAttribute('onclick', 'aslider.toggleAudio(' + sliderIndex + ')');
+                var muteIcon = document.createElement('img');
+                muteIcon.setAttribute('src', aslider.audioLoudIcon);
+                muteIcon.setAttribute('style', 'width: inherit; height: inherit;');
+                muteButton.appendChild(muteIcon);
+                currentSlider.appendChild(muteButton);
                 // Having the onclick handler appended this way neatly resolves potential memory leaks if the page
                 // will be modified by outside scripts.
             }
 
-            if (typeof $(this).attr('data-hide-pause') === 'undefined' &&
-                typeof $(this).attr('data-hide-controls') === 'undefined') {
+            if (! currentSlider.hasAttribute('data-hide-pause') &&
+                ! currentSlider.hasAttribute('data-hide-controls')) {
                 // Add play-pause icon
-                $(this).append('<a style="' + aslider.playPauseIconStyle +
-                '" class="' + aslider.pauseButtonClass + '" data-state="play" ' +
-                'onclick="aslider.toggleState(' + sliderIndex + ')"><img src="' + aslider.pauseIcon +
-                '" style="width: inherit; height: inherit;" /></a>');
+                var pauseButton = document.createElement('a');
+                pauseButton.setAttribute('style', aslider.playPauseIconStyle);
+                pauseButton.setAttribute('class', aslider.pauseButtonClass);
+                pauseButton.setAttribute('data-state', 'play');
+                pauseButton.setAttribute('onclick', 'aslider.toggleState(' + sliderIndex + ')');
+                var pauseIcon = document.createElement('img');
+                pauseIcon.setAttribute('src', aslider.pauseIcon);
+                pauseIcon.setAttribute('style', 'width: inherit; height: inherit');
+                pauseButton.appendChild(pauseIcon);
+                currentSlider.appendChild(pauseButton);
             }
 
-            var slides = $(this).find('.aslide');
+            var slides = currentSlider.querySelectorAll('.aslide');
 
-            $(slides).each(function () {
-                var slide = $(this);
+            for (var j = 0; j < slides.length; j++) {
+                var slide = slides[j];
 
-                slide.attr('style', aslider.slideFade + ";" + aslider.slideFadeOut);
-                if (slide.attr('data-audio')) {
-                    var loop = slide.attr('data-audio-loop');
-                    slide.append('<audio src="' + slide.attr('data-audio') + '" ' + ((typeof loop !== 'undefined') ? 'loop' : '') + ' preload></audio>');
+                slide.setAttribute('style', aslider.slideFade + ";" + aslider.slideFadeOut);
+                if (slide.hasAttribute('data-audio')) {
+                    var audioElement =  document.createElement('audio');
+                    audioElement.setAttribute('src', slide.getAttribute('data-audio'));
+                    audioElement.setAttribute('preload', '');
+                    if (slide.hasAttribute('data-audio-loop')) {
+                        audioElement.setAttribute('loop', '');
+                    }
+                    slide.appendChild(audioElement);
                 }
-            });
+            }
 
             if (slides.length > 0) { // Don't crap out if no slides specified
-                var duration = $(slides[0]).attr('data-duration') || $(this).attr('data-duration');
+                var duration = slides[0].getAttribute('data-duration') || currentSlider.getAttribute('data-duration');
                 if (!duration) throw ("Could not find duration on slide or on slider.");
 
-                $(slides[0]).attr('style', aslider.slideFade + ";" + aslider.slideFadeIn);
-                sliderObject.timeoutHandle = setTimeout(function () {
+                slides[0].setAttribute('style', aslider.slideFade + ";" + aslider.slideFadeIn);
+                sliderObject.timeoutHandle = setTimeout(function (sliderIndex, slides) {
                     aslider.advanceSlide(slides[0], sliderIndex);
-                }, parseInt(duration) * 1000);
+                }, parseInt(duration) * 1000, sliderIndex, slides);
                 sliderObject.currentSlide = slides[0];
-                $(this).height($(slides[0]).height());
 
                 aslider._playAudio(sliderIndex);
             }
-        });
+        }
     },
 
     advanceSlide: function (currentSlide, sliderIndex) {
         'use strict';
-
-        var nextSlide = $(currentSlide).next('.aslide');
+        console.log('Advance', sliderIndex)
+        var nextSlide = currentSlide.nextElementSibling;
         var slider = aslider.sliders[sliderIndex].sliderContainer;
 
-        if (nextSlide.length == 0) { // Loop to the first slide if we are on the last slide now
-            nextSlide = $(currentSlide).parent().children('.aslide:first-child');
+        if (!nextSlide ||! /aslide/.test(nextSlide.className)) { // Loop to the first slide if we are on the last slide now
+            nextSlide = currentSlide.parentNode.querySelector('.aslide');
         }
 
-        $(currentSlide).attr('style', aslider.slideFade + ";" + aslider.slideFadeOut);
-        $(nextSlide).attr('style', aslider.slideFade + ";" + aslider.slideFadeIn);
+        currentSlide.setAttribute('style', aslider.slideFade + ";" + aslider.slideFadeOut);
+        nextSlide.setAttribute('style', aslider.slideFade + ";" + aslider.slideFadeIn);
 
         // Cancel playing audio
         aslider._pauseAudio(sliderIndex);
@@ -89,9 +108,9 @@ var aslider = {
         // Play new audio
         aslider._playAudio(sliderIndex);
 
-        slider.height($(nextSlide).height());
+        //slider.clientHeight($(nextSlide).height());
 
-        var duration = $(nextSlide).attr('data-duration') || slider.attr('data-duration');
+        var duration = nextSlide.getAttribute('data-duration') || slider.getAttribute('data-duration');
         if (!duration) throw ("Could not find duration on slide or on slider.");
 
         aslider.sliders[sliderIndex].timeoutHandle = setTimeout(function () {
@@ -142,7 +161,7 @@ var aslider = {
         'use strict';
 
         var slider = aslider.sliders[sliderIndex].sliderContainer;
-        console.log(slider)
+
         var pauseButton = slider.querySelector('.'+aslider.pauseButtonClass);
 
         if (pauseButton.getAttribute('data-state') === 'play') { // If the slider is playing, pause it
@@ -165,19 +184,6 @@ var aslider = {
         }
     },
 
-    onResize: function () {
-        // Change the height of the slider elements
-        var sliders = $('.aslider');
-        //for (var i = 0; i < sliders.length; i++) {
-        //    sliders[i].clientHeight = sliders[i].querySelector('.aslide').clientHeight;
-        //}
-        $(sliders).each(function () {
-            var h = $(this).find('.aslide').height();
-            console.log("JQ SET HEIGHT", h)
-            //$(this).height(h);
-        });
-    },
-
     stop: function() {
         'use strict';
         while (aslider.sliders.length > 0) {
@@ -192,10 +198,8 @@ var aslider = {
         aslider.stop();
         if (window.addEventListener) {
             window.addEventListener('load', this.initAsliders, false);
-            window.addEventListener('resize', this.onResize, false);
         } else if (window.attachEvent) { // IE
             window.attachEvent('onload', this.initAsliders);
-            window.attachEvent('resize', this.onResize);
         }
     },
 
