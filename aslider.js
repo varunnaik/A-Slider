@@ -122,14 +122,20 @@ var aslider = {
         // Given a slideshow, plays the audio for the current slide if present and not muted
         'use strict';
         if (aslider.sliders[slideIndex].muted === false) {
-            aslider.sliders[slideIndex].currentSlide.querySelector('audio').play();
+            var audio = aslider.sliders[slideIndex].currentSlide.querySelector('audio');
+            if (audio) {
+                audio.play();            
+            }
         }
     },
 
     _pauseAudio: function(slideIndex) {
         // Given a slideshow, pauses the audio for the current slide
         'use strict';
-        aslider.sliders[slideIndex].currentSlide.querySelector('audio').pause();
+        var audio = aslider.sliders[slideIndex].currentSlide.querySelector('audio');
+        if (audio) {
+            audio.pause();            
+        }
     },
 
     toggleAudio: function (sliderIndex) {
