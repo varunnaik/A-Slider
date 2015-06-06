@@ -2,27 +2,30 @@ var aslider = {
     // Each slider is stored in this as {currentSlide: xx, timeoutHandle: yy}
     sliders: [],
 
+    // Init Aslider and each defined slider on the webpage
     initAsliders: function () {
         'use strict';
 
-        // Get each slider element and process it
+        // Get each slider from the webpage and process it
         var sliders = document.querySelectorAll('.aslider');
         for (var i = 0; i < sliders.length; i++) {
 
             var currentSlider = sliders[i];
 
-            // Create an object to represent slider state
+            // Create an object to represent current slider state for this slider
             var sliderObject = {};
             var sliderIndex = aslider.sliders.push(sliderObject) - 1;
 
             sliderObject.sliderContainer = sliders[i];
             sliderObject.muted = false;
 
-            // Normalise each slider
+            // Normalise each slider element on the page
             var style = currentSlider.getAttribute('style');
             currentSlider.setAttribute('style', (style)?style+';position:relative':'position:relative');
 
-            // If we should show the play and mute controls, do so now
+            // Perform any slider specific setup for the current slider:
+            
+            // Hide the mute control?
             if (! currentSlider.hasAttribute('data-hide-mute') &&
                     ! currentSlider.hasAttribute('data-hide-controls')) {
                 // Add audio/mute icon
@@ -40,6 +43,7 @@ var aslider = {
                 // will be modified by outside scripts.
             }
 
+            // Hide the play-pause control?
             if (! currentSlider.hasAttribute('data-hide-pause') &&
                 ! currentSlider.hasAttribute('data-hide-controls')) {
                 // Add play-pause icon
@@ -54,12 +58,16 @@ var aslider = {
                 pauseButton.appendChild(pauseIcon);
                 currentSlider.appendChild(pauseButton);
             }
+            
+            // End slider specific setup.
 
+            // Initialise each slide of the current slider
             var slides = currentSlider.querySelectorAll('.aslide');
 
             for (var j = 0; j < slides.length; j++) {
                 var slide = slides[j];
 
+                // Set classes to hide the slide and preload audio if specified
                 slide.setAttribute('style', aslider.slideFade + ";" + aslider.slideFadeOut);
                 if (slide.hasAttribute('data-audio')) {
                     var audioElement =  document.createElement('audio');
@@ -72,10 +80,11 @@ var aslider = {
                 }
             }
 
+            // Advance to the first slide and start the slider
             if (slides.length > 0) { // Don't crap out if no slides specified
                 var duration = slides[0].getAttribute('data-duration') || currentSlider.getAttribute('data-duration');
                 if (!duration) throw ("Could not find duration on slide or on slider.");
-
+                
                 slides[0].setAttribute('style', aslider.slideFade + ";" + aslider.slideFadeIn);
                 sliderObject.timeoutHandle = setTimeout(function (sliderIndex, slides) {
                     aslider.advanceSlide(slides[0], sliderIndex);
